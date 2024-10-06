@@ -1,8 +1,5 @@
-package game_utils;
+package utils;
 
-import game_utils.Game;
-import game_utils.GameUtils;
-import game_utils.Player;
 import main.Main;
 
 import java.io.IOException;

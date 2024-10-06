@@ -1,4 +1,4 @@
-package game_utils;
+package utils;
 
 import java.util.Arrays;
 
@@ -17,22 +17,26 @@ public final class Game {
         this.isPlayerATurn = isPlayerATurn;
     }
 
+
+    /**
+     * Updates this board accourding to the provided move.
+     *
+     * @param localPosition  as number from 0 to 5
+     * @return if move was successfully executed
+     */
     public boolean moveNormalized(int localPosition) {
+
         return move(localPosition + (isPlayerATurn ? 0 : 6));
     }
 
     /**
      * Updates this board accourding to the provided move.
      *
-     * @param position  as number from 0 to 5
+     * @param position  as number from 0 to 11
      * @return if move was successfully executed
      */
     public boolean move(final int position) {
-
         if (board[position] == 0) {
-            return false;
-        } else if (getWinner() != Winner.NOT_DECIDED) {
-            System.err.println("GAME ALREADY DECIDED");
             return false;
         }
 

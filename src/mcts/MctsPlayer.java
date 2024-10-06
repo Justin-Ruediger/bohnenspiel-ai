@@ -1,11 +1,8 @@
 package mcts;
 
-import game_utils.Game;
-import game_utils.GameUtils;
-import game_utils.Player;
-import main.Main;
-
-import java.io.IOException;
+import utils.Game;
+import utils.GameUtils;
+import utils.Player;
 
 public class MctsPlayer extends Player {
     public MctsPlayer(String gameId) {
@@ -14,79 +11,68 @@ public class MctsPlayer extends Player {
 
     @Override
     public void start() {
-        Game g = GameUtils.getStartingState();
+        System.out.println("Waiting for game to start...");
+
         int state = waitForTurnAndGetState();
-        TreeNode newRoot = null;
-        Thread mctsThread;
+
+        final Game currentGame = GameUtils.getStartingState();
+        MctsThread mctsThread = null;
+
+        System.out.println(currentGame);
+
         while (state != -2) {
-            Mcts mcts;
+            // Apply other players moves
+            if (state >= 1 && state <= 12) {
+                System.out.println("Enemy chose " + state);
+                currentGame.move(state - 1);
+                System.out.println(currentGame + "\n");
+            }
 
-            if(newRoot == null) {
-                mcts = new Mcts(g);
+            if (mctsThread == null) {
+                mctsThread = new MctsThread(currentGame.clone());
+                mctsThread.start();
             } else {
-                mcts = new Mcts(newRoot, g);
+                Mcts result = mctsThread.interuptAndGetResult();
+                // create a new MCTS instance based of the enemys move.
+                mctsThread = new MctsThread(result.getRoot().childNodes[state - (currentGame.isPlayerATurn() ? 7 : 1)], currentGame.clone());
+                mctsThread.start();
             }
-            Mcts finalMcts = mcts;
-            mctsThread = new Thread() {
-                @Override
-                public void run() {
-                    while (!interrupted()) {
-                        finalMcts.startIteration();
-                    }
-                }
-            };
 
-            state = waitForTurnAndGetState();
 
-            if(state == -2) {
-                break;
-            }
-            mctsThread.interrupt();
             try {
-                Thread.sleep(50);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
-            if(state > 0) {
-                g.move(state - 1);
+            Mcts result = mctsThread.interuptAndGetResult();
+            int bestMove = result.getBestMove() + (currentGame.isPlayerATurn() ? 0 : 6);
+
+            final TreeNode newRootNode = result.getRoot().childNodes[result.getBestMove()];
+            System.out.printf("Move %d : Certainty Values (%d : %d) \n", bestMove, newRootNode.winsA, newRootNode.winsB);
+            move(bestMove);
+
+            if(!currentGame.move(bestMove)) {
+                System.err.println("Invalid Move");
             }
+            System.out.println(currentGame + "\n");
 
-            if (state > 6 && state <= 12 && newRoot != null) {
-                newRoot = newRoot.childNodes[state - 7];
-
-            } else if (state > 0 && newRoot != null) {
-                g.move(state - 1);
-                newRoot = newRoot.childNodes[state - 1];
-            }
-
-            if(newRoot == null) {
-                mcts = new Mcts(g);
-            } else {
-                mcts = new Mcts(newRoot, g);
-            }
-            Mcts finalMcts1 = mcts;
-            mctsThread = new Thread() {
-                @Override
-                public void run() {
-                    while (!interrupted()) {
-                        finalMcts1.startIteration();
-                    }
-                }
-            };
-
+            // Resume calculations based of chosen move:
+            mctsThread = new MctsThread(result.getRoot().childNodes[result.getBestMove()], currentGame.clone());
             mctsThread.start();
-            try {
-                Thread.sleep(3000);
-                mctsThread.interrupt();
-                move(mcts.getBestMove() + (g.isPlayerATurn() ? 0 : 6));
 
-                g.moveNormalized(mcts.getBestMove());
-                newRoot = mcts.getRoot().childNodes[mcts.getBestMove()];
-                System.out.println(mcts.getBestMove());
+            try {
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            // Update State:
+            state = waitForTurnAndGetState();
         }
+        if (mctsThread != null) {
+            mctsThread.interrupt();
+        }
+        System.out.println("Game Ended");
+        System.out.println(getStateString());
     }
 }

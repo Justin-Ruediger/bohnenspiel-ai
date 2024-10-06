@@ -1,4 +1,4 @@
-package game_utils;
+package utils;
 
 public abstract class Player {
     private final String gameId;
@@ -18,6 +18,14 @@ public abstract class Player {
     protected final void move(int field) {
         try {
             RestClient.move(gameId, field + 1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected final String getStateString() {
+        try {
+            return RestClient.getStateMessage(gameId);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

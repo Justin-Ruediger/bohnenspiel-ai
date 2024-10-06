@@ -1,8 +1,7 @@
 package main;
 
-import game_utils.ManualPlayer;
-import game_utils.Player;
-import game_utils.RestClient;
+import utils.Player;
+import utils.RestClient;
 import mcts.MctsPlayer;
 
 import java.io.BufferedReader;
@@ -17,8 +16,7 @@ public class Main {
         try {
             System.out.print("Name:");
 
-            String name = input.readLine();
-            RestClient.name = name;
+            RestClient.name = input.readLine();
 
             final String gameId;
             while(true) {

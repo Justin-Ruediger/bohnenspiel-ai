@@ -1,6 +1,4 @@
-package game_utils;
-
-import mcts.Mcts;
+package utils;
 
 public class GameUtils {
     public static Game getStartingState() {

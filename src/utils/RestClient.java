@@ -1,4 +1,4 @@
-package game_utils;
+package utils;
 
 import main.Main;
 
@@ -43,16 +43,20 @@ public class RestClient {
      * 1-12: The last move of your opponent
      */
     public static int waitForTurnAndGetState(String gameID) throws Exception {
-        Thread.sleep(100);
-
         String url = SERVER + "/api/check/" + gameID + "/" + name;
         int state = Integer.parseInt(load(url));
         while (!((1 <= state && state <= 12) || state == -1 || state == -2)) {
-            Thread.sleep(100);
+            Thread.sleep(50);
             state = Integer.parseInt(load(url));
         }
 
         return state;
+    }
+
+    public static int getState(String gameId) throws Exception {
+        String url = SERVER + "/api/check/" + gameId + "/" + name;
+
+        return Integer.parseInt(load(url));
     }
 
     public static String[] openGames() throws Exception {
@@ -76,9 +80,15 @@ public class RestClient {
 
 
     public static void move(String gameID, int fieldID) throws Exception {
+        System.out.println("State: " + getState(gameID) + "Field ID: " + fieldID);
+
         String url = SERVER + "/api/move/" + gameID + "/" + name + "/" + fieldID;
-        System.out.println("MOVE : " + fieldID);
-        System.out.println(load(url));
+        load(url);
+    }
+
+    public static String getStateMessage(String gameId) throws Exception {
+        String url = SERVER + "/api/statemsg/" + gameId + "/";
+        return load(url);
     }
 
 
@@ -86,7 +96,7 @@ public class RestClient {
         URI uri = new URI(url.replace(" ", ""));
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(uri.toURL().openConnection().getInputStream()));
         StringBuilder sb = new StringBuilder();
-        String line = null;
+        String line;
         while ((line = bufferedReader.readLine()) != null) {
             sb.append(line);
         }

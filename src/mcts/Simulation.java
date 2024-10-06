@@ -1,6 +1,6 @@
 package mcts;
 
-import game_utils.Game;
+import utils.Game;
 
 public class Simulation {
     public final Game game;
@@ -11,7 +11,7 @@ public class Simulation {
     }
 
     public void startSimulation() {
-        move: while (game.getWinner() == Game.Winner.NOT_DECIDED) {
+         while (game.getWinner() == Game.Winner.NOT_DECIDED) {
             final int move = (int) (Math.random() * 6);
             if (game.moveNormalized(move)) {
                 continue; // move successful
