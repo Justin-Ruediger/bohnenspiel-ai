@@ -42,7 +42,9 @@ public class Mcts {
 
                 int[] res = new int[] {0, 0};
 
-                for(int j = 0; j < 5; j++) {
+                // We tested running multiple simulations at each node, which performed worse than just running one
+                // TODO: Clean up
+                for(int j = 0; j < 1; j++) {
                     Simulation sim = new Simulation(runningGame);
                     sim.startSimulation();
                     if (sim.getSimulationResult() == Game.Winner.PLAYER_A) {

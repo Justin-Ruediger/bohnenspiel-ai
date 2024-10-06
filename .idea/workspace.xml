@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22adecf6-f488-41f5-905b-3432473b7edd" name="Changes" comment="Finished strong AI">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mcts/MctsThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/CompletableThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game_utils/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game_utils/GameUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/GameUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game_utils/ManualPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ManualPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game_utils/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game_utils/RestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/RestClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mcts/Mcts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mcts/Mcts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mcts/MctsPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mcts/MctsPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mcts/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mcts/Simulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mcts/TreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mcts/TreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +99,7 @@
       <updated>1728208644282</updated>
       <workItem from="1728208645331" duration="8126000" />
       <workItem from="1728217070048" duration="3601000" />
-      <workItem from="1728235019050" duration="2314000" />
+      <workItem from="1728235019050" duration="4466000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <option name="closed" value="true" />
@@ -121,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728208758832</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Finished strong AI">
+      <option name="closed" value="true" />
+      <created>1728237578267</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728237578267</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
