@@ -40,7 +40,7 @@ public class MctsPlayer extends Player {
 
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1700);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

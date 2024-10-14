@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-    public final static String SERVER = "http://bohnenspiel.informatik.uni-mannheim.de";
+    public final static String SERVER = "http://ole.informatik.uni-mannheim.de/";
     public final static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) {
