@@ -12,7 +12,7 @@ import java.net.URI;
 public class RestClient {
     static final String SERVER = Main.SERVER;
 
-    private static String name = "Nameless";
+    private static String name = Main.NAME;
 
 
     public static String createGame() throws Exception {

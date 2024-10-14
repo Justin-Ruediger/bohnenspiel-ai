@@ -10,13 +10,14 @@ import java.io.InputStreamReader;
 
 public class Main {
     public final static String SERVER = "http://ole.informatik.uni-mannheim.de/";
+    public final static String NAME = "GruppeXAi";
     public final static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(final String[] args) {
         try {
-            System.out.print("Name:");
+            System.out.print("Name: " + NAME);
 
-            RestClient.setName(input.readLine());
+            // RestClient.setName(input.readLine());
 
             final String gameId;
             while (true) {
