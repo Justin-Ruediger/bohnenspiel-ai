@@ -4,6 +4,8 @@ import utils.Benchmark;
 import utils.Game;
 import utils.Player;
 
+import java.util.Arrays;
+
 public class MctsPlayer extends Player {
     public MctsPlayer(String gameId) {
         super(gameId);
@@ -31,12 +33,12 @@ public class MctsPlayer extends Player {
             }
 
             if (mctsThread == null) {
-                mctsThread = new MctsThread(currentGame.clone());
+                mctsThread = new MctsParallelDividerThread(currentGame.clone());
                 mctsThread.start();
             } else {
                 Mcts result = mctsThread.interuptAndGetResult();
                 // create a new MCTS instance based of the enemys move.
-                mctsThread = new MctsThread(result.getRoot().childNodes[state - (currentGame.isPlayerATurn() ? 7 : 1)], currentGame.clone());
+                mctsThread = new MctsParallelDividerThread(result.getRoot().childNodes[state - (currentGame.isPlayerATurn() ? 7 : 1)], currentGame.clone());
                 mctsThread.start();
             }
 
@@ -48,9 +50,10 @@ public class MctsPlayer extends Player {
             }
 
             Mcts result = mctsThread.interuptAndGetResult();
-            int bestMove = result.getBestMove() + (currentGame.isPlayerATurn() ? 0 : 6);
+            int normalizedBestMove = result.getBestMove();
+            int bestMove = normalizedBestMove + (currentGame.isPlayerATurn() ? 0 : 6);
 
-            final TreeNode newRootNode = result.getRoot().childNodes[result.getBestMove()];
+            final TreeNode newRootNode = result.getRoot().childNodes[normalizedBestMove];
             System.out.printf("Chosen Move %d : Simulation Values (%d : %d) \n", bestMove, newRootNode.winsA, newRootNode.winsB);
             move(bestMove);
 
@@ -63,7 +66,7 @@ public class MctsPlayer extends Player {
             System.out.println(currentGame + "\n");
 
             // Resume calculations based of chosen move:
-            mctsThread = new MctsThread(result.getRoot().childNodes[result.getBestMove()], currentGame.clone());
+            mctsThread = new MctsParallelDividerThread(result.getRoot().childNodes[normalizedBestMove], currentGame.clone());
             mctsThread.start();
 
             try {
