@@ -6,10 +6,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
 
+/**
+ * A simple and convenient API to interact with the Bohnenspiel server.
+ */
 public class RestClient {
     static final String SERVER = Main.SERVER;
-    public static String name ="A";
 
+    private static String name = "Nameless";
 
 
     public static String createGame() throws Exception {
@@ -33,7 +36,6 @@ public class RestClient {
     }
 
     /**
-     *
      * returnValues
      * 0: The game can be started
      * -1: It's your turn
@@ -42,7 +44,7 @@ public class RestClient {
      * -4: game_utils.Player 2 is missing
      * 1-12: The last move of your opponent
      */
-    public static int waitForTurnAndGetState(String gameID) throws Exception {
+    public static int waitForTurnAndGetState(final String gameID) throws Exception {
         String url = SERVER + "/api/check/" + gameID + "/" + name;
         int state = Integer.parseInt(load(url));
         while (!((1 <= state && state <= 12) || state == -1 || state == -2)) {
@@ -53,7 +55,7 @@ public class RestClient {
         return state;
     }
 
-    public static int getState(String gameId) throws Exception {
+    public static int getState(final String gameId) throws Exception {
         String url = SERVER + "/api/check/" + gameId + "/" + name;
 
         return Integer.parseInt(load(url));
@@ -79,20 +81,18 @@ public class RestClient {
     }
 
 
-    public static void move(String gameID, int fieldID) throws Exception {
-        System.out.println("State: " + getState(gameID) + "Field ID: " + fieldID);
-
+    public static void move(final String gameID, final int fieldID) throws Exception {
         String url = SERVER + "/api/move/" + gameID + "/" + name + "/" + fieldID;
         load(url);
     }
 
-    public static String getStateMessage(String gameId) throws Exception {
+    public static String getStateMessage(final String gameId) throws Exception {
         String url = SERVER + "/api/statemsg/" + gameId + "/";
         return load(url);
     }
 
 
-    static String load(String url) throws Exception {
+    private static String load(final String url) throws Exception {
         URI uri = new URI(url.replace(" ", ""));
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(uri.toURL().openConnection().getInputStream()));
         StringBuilder sb = new StringBuilder();
@@ -102,5 +102,13 @@ public class RestClient {
         }
         bufferedReader.close();
         return (sb.toString());
+    }
+
+    public static String getName() {
+        return name;
+    }
+
+    public static void setName(final String name) {
+        RestClient.name = name;
     }
 }
