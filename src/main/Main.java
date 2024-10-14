@@ -12,14 +12,14 @@ public class Main {
     public final static String SERVER = "http://ole.informatik.uni-mannheim.de/";
     public final static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         try {
             System.out.print("Name:");
 
-            RestClient.name = input.readLine();
+            RestClient.setName(input.readLine());
 
             final String gameId;
-            while(true) {
+            while (true) {
                 String[] openGames = RestClient.openGames();
 
                 System.out.println("What game would you like to join? ([r] to reload)");

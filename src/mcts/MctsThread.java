@@ -3,6 +3,9 @@ package mcts;
 import utils.CompletableThread;
 import utils.Game;
 
+/**
+ * A Thread managing all the MCTS logic for easy use in multithreading environments.
+ */
 public class MctsThread extends CompletableThread<Mcts> {
 
     public final Mcts mcts;

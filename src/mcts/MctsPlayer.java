@@ -1,7 +1,7 @@
 package mcts;
 
+import utils.Benchmark;
 import utils.Game;
-import utils.GameUtils;
 import utils.Player;
 
 public class MctsPlayer extends Player {
@@ -15,15 +15,17 @@ public class MctsPlayer extends Player {
 
         int state = waitForTurnAndGetState();
 
-        final Game currentGame = GameUtils.getStartingState();
+        final Game currentGame = Game.getStartingState();
         MctsThread mctsThread = null;
 
         System.out.println(currentGame);
 
         while (state != -2) {
+            Benchmark benchmark = new Benchmark();
+            benchmark.start();
             // Apply other players moves
             if (state >= 1 && state <= 12) {
-                System.out.println("Enemy chose " + state);
+                System.out.println("Enemy chose field" + state);
                 currentGame.move(state - 1);
                 System.out.println(currentGame + "\n");
             }
@@ -49,8 +51,11 @@ public class MctsPlayer extends Player {
             int bestMove = result.getBestMove() + (currentGame.isPlayerATurn() ? 0 : 6);
 
             final TreeNode newRootNode = result.getRoot().childNodes[result.getBestMove()];
-            System.out.printf("Move %d : Certainty Values (%d : %d) \n", bestMove, newRootNode.winsA, newRootNode.winsB);
+            System.out.printf("Chosen Move %d : Simulation Values (%d : %d) \n", bestMove, newRootNode.winsA, newRootNode.winsB);
             move(bestMove);
+
+            benchmark.stop();
+            System.out.println("Own move took " + benchmark.getElapsedTimeInMillis() + "ms to compute!");
 
             if(!currentGame.move(bestMove)) {
                 System.err.println("Invalid Move");
@@ -62,7 +67,7 @@ public class MctsPlayer extends Player {
             mctsThread.start();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

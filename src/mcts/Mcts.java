@@ -1,10 +1,12 @@
 package mcts;
 
 import utils.Game;
-import utils.GameUtils;
 
 import java.util.Arrays;
 
+/**
+ * This Object manages all the operations needed for the MCTS algorithm to run.
+ */
 public class Mcts {
     public static final double C = 1.4;
     public final TreeNode root;
@@ -26,6 +28,7 @@ public class Mcts {
 
     /**
      * executes the algorithem on a given node and returns the result for backpropagation.
+     *
      * @return an int[2] representing [winsA, winsB]
      */
     private int[] runOn(final TreeNode node, final Game runningGame) {
@@ -40,11 +43,11 @@ public class Mcts {
                     continue;
                 }
 
-                int[] res = new int[] {0, 0};
+                int[] res = new int[]{0, 0};
 
                 // We tested running multiple simulations at each node, which performed worse than just running one
                 // TODO: Clean up
-                for(int j = 0; j < 1; j++) {
+                for (int j = 0; j < 1; j++) {
                     Simulation sim = new Simulation(runningGame);
                     sim.startSimulation();
                     if (sim.getSimulationResult() == Game.Winner.PLAYER_A) {
@@ -90,13 +93,12 @@ public class Mcts {
                 resultForBackpropagation = runOn(node.childNodes[maxIndex], runningGame);
             } catch (StackOverflowError e) {
                 System.err.println(e);
-                resultForBackpropagation = new int[] {runningGame.isPlayerATurn() ? 0 : 1, runningGame.isPlayerATurn() ? 1 : 0};
+                resultForBackpropagation = new int[]{runningGame.isPlayerATurn() ? 0 : 1, runningGame.isPlayerATurn() ? 1 : 0};
             }
         } else {
             // Case no valid move from here, if all games have an UCT score of 0, game here is marked as loss TODO: IDea increse the amounts of enemy win to make this scenary more unlikely
-            resultForBackpropagation = new int[] {runningGame.isPlayerATurn() ? 0 : 1, runningGame.isPlayerATurn() ? 1 : 0};
+            resultForBackpropagation = new int[]{runningGame.isPlayerATurn() ? 0 : 1, runningGame.isPlayerATurn() ? 1 : 0};
         }
-
 
 
         node.winsA += resultForBackpropagation[0];
@@ -125,7 +127,8 @@ public class Mcts {
 
         return maxIndex;
     }
-    public TreeNode getRoot () {
+
+    public TreeNode getRoot() {
         return root;
     }
 

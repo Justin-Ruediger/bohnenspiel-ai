@@ -1,5 +1,8 @@
 package utils;
 
+/**
+ * Represents a Player in the game, overide the start Method to add the actually playing logic to this player
+ */
 public abstract class Player {
     private final String gameId;
 

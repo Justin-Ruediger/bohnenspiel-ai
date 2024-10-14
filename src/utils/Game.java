@@ -129,4 +129,12 @@ public final class Game {
     public Game clone() {
         return new Game(board.clone(), pointsA, pointsB, isPlayerATurn);
     }
+
+    public static Game getStartingState() {
+        return new Game(new byte[]
+                {
+                        6, 6, 6, 6, 6, 6, // PLAYER A
+                        6, 6, 6, 6, 6, 6  // PLAYER B
+                }, (byte) 0, (byte) 0, true);
+    }
 }
